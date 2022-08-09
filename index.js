@@ -87,9 +87,6 @@ app.delete('/products/:id', async(req, res) => {
 
 
 
-
-
-
 app.listen(port, () => {
     console.log(`SERVING ON PORT ${port}`);
 })
