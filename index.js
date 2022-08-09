@@ -53,9 +53,15 @@ app.get('/products/new', async(req, res) => {
 
 app.post('/products', async(req, res) => {
     const newProduct = new Product(req.body);
-    await newProduct.save();
-    console.log(newProduct);
-    res.redirect(`/products/${newProduct._id}`);
+    if (newProduct.name && newProduct.price && newProduct.category){
+        await newProduct.save();
+        console.log(newProduct);
+        res.redirect(`/products/${newProduct._id}`);
+    }else{
+        alert('Product name, price and category must not be empty!');
+        res.redirect('/products/new');
+    }
+    
 })
 
 app.get('/products/:id', async(req, res) => {
