@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+require('mongoose-double')(mongoose);
+
+var SchemaTypes = mongoose.Schema.Types;
 
 const productSchema = new mongoose.Schema({
     name: {
@@ -6,7 +9,7 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     price: {
-        type: Number,
+        type: SchemaTypes.Double,
         required: true,
         min: 0
     },

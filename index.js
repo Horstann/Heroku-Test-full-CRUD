@@ -59,7 +59,6 @@ app.post('/products', async(req, res) => {
         res.redirect(`/products/${newProduct._id}`);
     }else{
         res.send("ERROR: Product name, price and category must not be empty!");
-        //res.redirect('/products/new');
     }
 })
 
@@ -73,15 +72,19 @@ app.get('/products/:id', async(req, res) => {
 app.get('/products/:id/edit', async(req, res) => {
     const {id} = req.params;
     const product = await Product.findById(id);
-    console.log('HELLO '+product.category);
+    console.log(product.category);
     res.render('products/edit', {product, categories});
 })
 
 app.put('/products/:id', async(req, res) => {
     console.log(req.body);
-    const {id} = req.params;
-    const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true, new: true});
-    res.redirect(`/products/${product._id}`);
+    if (req.body.name && req.body.price && req.body.category){
+        const {id} = req.params;
+        const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true, new: true});
+        res.redirect(`/products/${product._id}`);
+    }else{
+        res.send("ERROR: Product name, price and category must not be empty!");
+    }
 })
 
 app.delete('/products/:id', async(req, res) => {
