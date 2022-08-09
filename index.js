@@ -59,9 +59,8 @@ app.post('/products', async(req, res) => {
         res.redirect(`/products/${newProduct._id}`);
     }else{
         alert('Product name, price and category must not be empty!');
-        res.redirect('/products/new');
+        res.render('/products/new');
     }
-    
 })
 
 app.get('/products/:id', async(req, res) => {
