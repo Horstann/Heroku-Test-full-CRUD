@@ -8,6 +8,9 @@
 </head>
 <body>
     <h1><%= category.charAt(0).toUpperCase() + category.slice(1) %> Products</h1>
+
+    <a href="/products/new">Add a New Product</a>
+
     <ul>
         <% for (let product of products) { %>
             <li><a href="/products/<%= product._id %>"><%= product.name %></a></li>
@@ -18,6 +21,5 @@
         <a href="/products">All Products</a>
     <% } %>
 
-    <a href="/products/new">Add a New Product</a>
 </body>
 </html>
