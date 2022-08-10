@@ -54,7 +54,7 @@ app.get('/products/new', async(req, res) => {
 app.post('/products', async(req, res) => {
     const newProduct = new Product(req.body);
     if (newProduct.name && newProduct.price && newProduct.category){
-        if (newProduct.name.length<500){
+        if (newProduct.name.length < 300){
             await newProduct.save();
             console.log(newProduct);
             res.redirect(`/products/${newProduct._id}`);
@@ -84,7 +84,7 @@ app.put('/products/:id', async(req, res) => {
     console.log(req.body);
 
     if (req.body.name && req.body.price && req.body.category){
-        if (req.body.name.length < 500){
+        if (req.body.name.length < 300){
             const {id} = req.params;
             const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true, new: true});
             res.redirect(`/products/${product._id}`);
