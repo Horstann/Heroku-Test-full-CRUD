@@ -54,9 +54,13 @@ app.get('/products/new', async(req, res) => {
 app.post('/products', async(req, res) => {
     const newProduct = new Product(req.body);
     if (newProduct.name && newProduct.price && newProduct.category){
-        await newProduct.save();
-        console.log(newProduct);
-        res.redirect(`/products/${newProduct._id}`);
+        if (newProduct.name.length<500){
+            await newProduct.save();
+            console.log(newProduct);
+            res.redirect(`/products/${newProduct._id}`);
+        }else{
+            res.send("ERROR: Product name is too long!");
+        }
     }else{
         res.send("ERROR: Product name, price and category must not be empty!");
     }
@@ -78,10 +82,15 @@ app.get('/products/:id/edit', async(req, res) => {
 
 app.put('/products/:id', async(req, res) => {
     console.log(req.body);
+
     if (req.body.name && req.body.price && req.body.category){
-        const {id} = req.params;
-        const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true, new: true});
-        res.redirect(`/products/${product._id}`);
+        if (req.body.name.length < 500){
+            const {id} = req.params;
+            const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true, new: true});
+            res.redirect(`/products/${product._id}`);
+        }else{
+            res.send("ERROR: Product name is too long!")
+        }
     }else{
         res.send("ERROR: Product name, price and category must not be empty!");
     }
